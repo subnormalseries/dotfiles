@@ -1,0 +1,29 @@
+[core]
+	editor = code --wait
+[user]
+	name = James Higginson
+	email = James.Higginson@iglu.com
+[alias]
+	s = status
+	alias = config --get-regexp ^alias\\.
+	# Delete local branches that have been merged into master
+	delete-merged-branches = "!git checkout master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	# Pull in upstream changes for master and rebase ontop of it.
+	rebase-master = !git fetch --all && git rebase origin/master
+	# Rebase interactively onto master
+	rebase-interactive = !git rebase -i origin/master
+	# Iterate over git repositories and run a command
+	all = "!f() { ls | xargs -I{} git -C {} $1; }; f"
+	# Navigate to git repo location, use "all" alias to pull master changes
+	update-masters = !cd "~/source/repos/git/" && git all "pull origin master:master" 
+	# Cleans up
+	cleanup = !git remote prune origin && git gc && git clean -dfx && git stash clear
+[help]
+	autocorrect = 8
+[merge]
+	tool = kdiff3
+[mergetool "kdiff3"]
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = false
+[mergetool]
+	keepBackup = false
